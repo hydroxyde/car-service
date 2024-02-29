@@ -1,6 +1,5 @@
 "use client"
 
-import { useAmp } from "next/amp"
 import { SearchManufacturer } from "./"
 import Image from 'next/image'
 
