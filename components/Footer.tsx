@@ -14,7 +14,7 @@ const Footer = () => {
                     />
                     <p className="text-base text-gray-700">
                         Riviera Services Agency 2023<br />
-                        All rights reserved &copy;
+                        Tous droits réservés &copy;
                     </p>
                 </div>
                 <div className="footer__links">
@@ -37,17 +37,17 @@ const Footer = () => {
             </div>
             <div className="flex justify-between items-center flex-wrap mt-10 border-t border-gray-100 sm:px-16 px-6 py-10">
                 <p className="whitespace-normal max-w-[50vw]">
-                    @2023 Riviera Services Agency. All Rights Reserved
+                    @2023 Riviera Services Agency. Tous droits réservés
                 </p>
                 <div className="footer__copyrights-link">
                     <Link href="/"
                         className="text-gray-500">
-                        Privacy Policy
+                        Politique de confidentialité
                     </Link>
                     <Link
                         href="/"
                         className="text-gray-500">
-                        Terms of Use
+                        C.G.U
                     </Link>
 
                 </div>
