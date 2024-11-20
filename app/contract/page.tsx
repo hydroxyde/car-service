@@ -20,7 +20,7 @@ export default function ContractPage() {
     });
     // To Do: add states of all fields
 
-    function handleChange(event) {
+    function handleChange(event: { target: { name: any; value: any; }; }) {
         const { name, value } = event.target;
         setFormData(prevFormData => ({
             ...prevFormData,
