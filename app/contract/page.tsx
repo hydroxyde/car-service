@@ -10,13 +10,21 @@ import PaiementDetailsForm from '@/components/PaiementDetailsFrom';
 export default function ContractPage() {
     const [formData, setFormData] = useState({
         renterName: '',
+        renterFirstName: '',
+        renterPhone: '',
         renterAddress: '',
-        vehicleModel: '',
-        vehicleDetails: {},
+        renterCity: '',
+        renterPostalCode: '',
+        renterEmail: '',
         rentalStartDate: '',
         rentalEndDate: '',
         rentalPrice: '',
-        deposit: ''
+        deposit: '',
+        kmAllowed: '',
+        kmAtStart: '',
+        vehicleModel: '',
+        vehicleDetails: {},
+        gasAtStart: ''
     });
     // To Do: add states of all fields
 
