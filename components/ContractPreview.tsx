@@ -176,8 +176,7 @@ export default function ContractPreview({ formData }: ContractPreviewProps) {
     );
 }
 
-// Helper function to calculate rental days
-function calculateRentalDays(startDate, endDate) {
+function calculateRentalDays(startDate: string | number | Date, endDate: string | number | Date) {
     const start = new Date(startDate);
     const end = new Date(endDate);
     const difference = end.getTime() - start.getTime();
