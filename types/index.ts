@@ -50,3 +50,26 @@ export interface CustomFilterProps {
     title: string,
     options: OptionProps[]
 }
+
+export interface FormData {
+    renterName: string;
+    renterFirstName: string;
+    renterPhone: string;
+    renterAddress: string;
+    renterCity: string;
+    renterPostalCode: string;
+    renterEmail: string;
+    rentalStartDate: string;
+    rentalEndDate: string;
+    rentalPrice: string;
+    deposit: string;
+    kmAllowed: string;
+    kmAtStart: string;
+    vehicleModel: string;
+    vehicleDetails: Record<string, any>;
+    gasAtStart: string;
+}
+
+export interface ContractPreviewProps {
+    formData: FormData;
+}

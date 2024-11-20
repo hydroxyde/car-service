@@ -1,4 +1,6 @@
-export default function ContractPreview({ formData }) {
+import { ContractPreviewProps } from '@/types';
+
+export default function ContractPreview({ formData }: ContractPreviewProps) {
     const {
         renterName,
         renterFirstName,
