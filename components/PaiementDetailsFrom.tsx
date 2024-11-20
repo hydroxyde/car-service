@@ -1,4 +1,6 @@
-export default function PaiementDetailsForm({ formData, onChange }) {
+import { PaiementDetailsFormProps } from '@/types'
+
+export default function PaiementDetailsForm({ formData, onChange }: PaiementDetailsFormProps) {
     return (
         <div className="form-section mb-6">
             <h2 className="text-xl font-semibold mb-4">Details paiement</h2>

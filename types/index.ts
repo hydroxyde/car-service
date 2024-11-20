@@ -73,3 +73,10 @@ export interface FormData {
 export interface ContractPreviewProps {
     formData: FormData;
 }
+
+export interface PaiementDetailsFormProps {
+    formData: {
+        paiementMethod: string;
+    };
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
