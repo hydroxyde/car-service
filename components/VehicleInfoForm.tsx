@@ -1,6 +1,8 @@
+import React from "react";
+import { VehicleInfoFormProps, VehicleDetails } from "../types";
 
 
-const VEHICLE_DATA = {
+const VEHICLE_DATA: Record<string, VehicleDetails> = {
     "Audi RS6 grise": { plateNumber: "ABC1234", year: 2021, color: "Gray", scratch: 250, rim: 200, element: 300, sit: 1500, dirty: 100, pound: 250, rsv: 60000 },
     "Audi RS6 noir": { plateNumber: "DEF5678", year: 2021, color: "Black", scratch: 250, rim: 200, element: 300, sit: 1500, dirty: 100, pound: 250, rsv: 60000 },
     "Lamborghini Urus": { plateNumber: "GHI9101", year: 2022, color: "Gray", scratch: 250, rim: 200, element: 300, sit: 1500, dirty: 100, pound: 250, rsv: 60000 },
@@ -9,8 +11,8 @@ const VEHICLE_DATA = {
 
 };
 
-export default function VehicleInfoForm({ formData, setFormData }) {
-    const handleVehicleChange = (event) => {
+export default function VehicleInfoForm({ formData, setFormData }: VehicleInfoFormProps) {
+    const handleVehicleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedModel = event.target.value;
         setFormData((prevData) => ({
             ...prevData,

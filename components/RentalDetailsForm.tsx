@@ -1,17 +1,36 @@
-export default function RentalDetailsForm({ formData, onChange }) {
+import React from "react";
+import { RentalDetailsFormProps } from "@/types";
+
+export default function RentalDetailsForm({ formData, onChange }: RentalDetailsFormProps) {
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+
+        if (name === "rentalStartDate") {
+            // Update the start date
+            onChange(event);
+
+            // Set the minimum end date to one day after the start date
+            const startDate = new Date(value);
+            startDate.setDate(startDate.getDate() + 1);
+
+            document.querySelector<HTMLInputElement>('[name="rentalEndDate"]')!.min = startDate.toISOString().split("T")[0];
+        } else if (name === "rentalEndDate") {
+            onChange(event);
+
+        };
+    }
     return (
         <div className="form-section mb-6">
             <h2 className="text-xl font-semibold mb-4">Details location</h2>
             <div className="flex space-x-4 mb-4">
                 <div className="flex items-center w-1/2">
                     <label className="w-32 text-gray-700" htmlFor="rentalStartDate">Debut</label>
-
                     <input
                         type="date"
                         name="rentalStartDate"
-                        value={formData.rentalStartDate}
+                        value={formData.rentalStartDate.split("T")[0]} // Display only the date portion
                         className="w-full p-2 border border-gray-300"
-                        onChange={onChange}
+                        onChange={handleDateChange}
                     />
                 </div>
                 <div className="flex items-center w-1/2">
@@ -19,9 +38,10 @@ export default function RentalDetailsForm({ formData, onChange }) {
                     <input
                         type="date"
                         name="rentalEndDate"
-                        value={formData.rentalEndDate}
+                        value={formData.rentalEndDate.split("T")[0]} // Display only the date portion
                         className="w-full p-2 border border-gray-300"
-                        onChange={onChange}
+                        onChange={handleDateChange}
+                        min={new Date(formData.rentalStartDate || new Date()).toISOString().split("T")[0]}
                     />
                 </div>
             </div>
@@ -54,8 +74,8 @@ export default function RentalDetailsForm({ formData, onChange }) {
                     />
                 </div>
             </div>
+            {/* Remaining fields unchanged */}
             <div className="flex space-x-4 mb-4">
-                {/* Kilometers Allowed (Km autorisés) */}
                 <div className="flex items-center w-1/2">
                     <label className="w-32 text-gray-700" htmlFor="kmAllowed">Km autorisés</label>
                     <input
@@ -90,7 +110,7 @@ export default function RentalDetailsForm({ formData, onChange }) {
                         name="kmExceed"
                         id="kmExceed"
                         placeholder="1"
-                        value={formData.kmAllowed}
+                        value={formData.kmExceed}
                         onChange={onChange}
                         className="w-1/3 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
@@ -102,12 +122,12 @@ export default function RentalDetailsForm({ formData, onChange }) {
                         name="gasAtStart"
                         id="gasAtStart"
                         placeholder="Entrer carburant"
-                        value={formData.kmAllowed}
+                        value={formData.gasAtStart}
                         onChange={onChange}
                         className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
             </div>
-        </div >
+        </div>
     );
 }

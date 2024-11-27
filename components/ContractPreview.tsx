@@ -1,4 +1,5 @@
-import { ContractPreviewProps } from '@/types';
+import { ContractPreviewProps } from '@/types'
+import Footer from '@/components/ContractFooter'
 
 export default function ContractPreview({ formData }: ContractPreviewProps) {
     const {
@@ -15,10 +16,16 @@ export default function ContractPreview({ formData }: ContractPreviewProps) {
         deposit,
         kmAllowed,
         kmAtStart,
+        kmExceed,
         vehicleModel,
         vehicleDetails,
+        paiementMethod,
+        paiementState,
         gasAtStart
     } = formData;
+
+    const departureDate = rentalStartDate ? new Date(rentalStartDate) : new Date();
+    const returnDate = rentalEndDate ? new Date(rentalEndDate) : new Date(departureDate);
     return (
         <div className="p-8 bg-white border rounded-lg shadow-md max-w-2xl mx-auto">
             {/* Header Section */}
@@ -98,11 +105,15 @@ export default function ContractPreview({ formData }: ContractPreviewProps) {
                     <tbody>
                         <tr>
                             <td className="border border-gray-300 px-4 py-2 font-medium">Départ :</td>
-                            <td className="border border-gray-300 px-4 py-2 truncate">{rentalStartDate || 'N/A'}</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">
+                                {rentalStartDate ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date(rentalStartDate)) : 'N/A'}
+                            </td>
                         </tr>
                         <tr>
                             <td className="border border-gray-300 px-4 py-2 font-medium">Retour :</td>
-                            <td className="border border-gray-300 px-4 py-2 truncate">{rentalEndDate || 'N/A'}</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">
+                                {rentalEndDate ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date(rentalEndDate)) : 'N/A'}
+                            </td>
                         </tr>
                         <tr>
                             <td className="border border-gray-300 px-4 py-2 font-medium">Caution :</td>
@@ -165,14 +176,105 @@ export default function ContractPreview({ formData }: ContractPreviewProps) {
                             <td className="border border-gray-300 px-4 py-2 truncate">{gasAtStart ? `${gasAtStart} %` : 'N/A'}</td>
                         </tr>
                         <tr>
-                            <td className="border border-gray-300 px-4 py-2 font-medium">Model :</td>
-                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleModel.split(" ")[1] || 'N/A'}</td>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Km supplémentaire :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{kmExceed ? `${kmExceed} €` : '1€'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Mode du Paiement :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{paiementMethod || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Etat du Paiement :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{paiementState ? 'Payé' : 'En attente' || 'N/A'}</td>
                         </tr>
                     </tbody>
 
                 </table>
             </div>
+            <Footer />
+            {/* Page Break */}
+            <div className="page-break"></div>
+
+            <div>
+                <table className="w-full table-fixed border-collapse border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th
+                                colSpan={2}
+                                className="bg-gray-200 border border-gray-300 px-4 py-2 font-semibold text-center"
+                            >
+                                Frais déductibles sur la caution
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Rayure :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.scratch + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Jantes rayées :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.rim + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Élément touché :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.element + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Siège abimé:</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.sit + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Retour véhicule sale :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.dirty + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Mise en fourrière :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.pound + ' euros' || 'N/A'}</td>
+                        </tr>
+                        <tr>
+                            <td className="border border-gray-300 px-4 py-2 font-medium">Dégat RSV :</td>
+                            <td className="border border-gray-300 px-4 py-2 truncate">{vehicleDetails?.rsv + ' euros' || 'N/A'}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="text-sm leading-relaxed">
+                    <p>
+                        Au moment de la prise du véhicule par le client, le taux de remplissage du carburant
+                        est de 100%. Par conséquent, le client s'engage à rendre le véhicule avec un taux de
+                        remplissage au moins équivalent. Par ailleurs, le prix du km supplémentaire est de 1
+                        euros.
+                    </p>
+                    <p>
+                        La caution est basée sur la somme de {deposit} euros. Si les frais dépassent
+                        cette somme, le client s'engage à régler la totalité des réparations du véhicule.
+                    </p>
+                    <p>
+                        Les frais déductibles sur la caution sont à titres indicatifs et peuvent varier en
+                        fonction de la gravité des dégâts constatés à la fin de la période de location,
+                        conformément à une évaluation objective effectuée par le propriétaire ou son
+                        représentant désigné.
+                    </p>
+                    <p>
+                        Le montant de la franchise applicable en cas de dommages est défini par l'assurance
+                        du véhicule de location. En cas de vol, accident responsable ou non, la franchise
+                        reste acquise au loueur. Le client déclare louer sous son entière responsabilité le
+                        véhicule et n'est pas autorisé à le prêter. Le véhicule est assuré tout risques. Le
+                        client utilisera le véhicule loué avec soins, réglera tous frais, amendes et
+                        dépenses pour toutes infractions à la circulation, ou stationnement, etc. Le client
+                        n'est pas autorisé à effectuer de réparations sur le véhicule à l'exception des
+                        frais consécutifs à : crevaisons, pannes d'électricité.
+                    </p>
+                    <p>
+                        Heure de départ: {departureDate.toLocaleString('fr-FR')}. Le locataire s'engage à
+                        rendre le véhicule au plus tard le {returnDate.toLocaleString('fr-FR')}. Tout retard
+                        entraînera des frais supplémentaires.
+                    </p>
+                </div>
+                <Footer />
+            </div>
         </div>
+
     );
 }
 
